@@ -8,5 +8,3 @@ Route::get('/', function () {
 });
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
-// This allows a maximum of 3 emails per minute per IP address
-Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:3,1');
