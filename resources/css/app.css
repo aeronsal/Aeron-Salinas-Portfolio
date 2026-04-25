@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+    --portfolio-bg: #fbf6f0;
+    --portfolio-surface: rgba(255, 255, 255, 0.92);
+    --portfolio-border: rgba(27, 27, 24, 0.1);
+    --portfolio-shadow: 0 30px 70px rgba(27, 27, 24, 0.08);
+    --portfolio-accent: #f8b803;
+    --portfolio-accent-soft: rgba(248, 184, 3, 0.16);
+    --portfolio-text: #1b1b18;
+    --portfolio-muted: #706f6c;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--portfolio-bg);
+    color: var(--portfolio-text);
+}
+
+.portfolio-hero {
+    background: radial-gradient(circle at top left, var(--portfolio-accent-soft), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(246, 180, 129, 0.12), transparent 30%),
+        var(--portfolio-bg);
+}
+
+.portfolio-card,
+.project-card {
+    border: 1px solid var(--portfolio-border);
+    background: var(--portfolio-surface);
+    box-shadow: var(--portfolio-shadow);
+    backdrop-filter: blur(12px);
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    background: #1b1b18;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #111111;
+    transform: translateY(-1px);
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(27, 27, 24, 0.12);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--portfolio-text);
+    font-weight: 600;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-ghost:hover {
+    border-color: var(--portfolio-accent);
+    transform: translateY(-1px);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 0.9rem;
+    border-radius: 9999px;
+    background: rgba(248, 184, 3, 0.12);
+    color: #8c5000;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
