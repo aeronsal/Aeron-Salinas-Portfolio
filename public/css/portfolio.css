@@ -467,6 +467,7 @@ p {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* This is the magic that centers incomplete rows! */
+    margin-bottom: 3rem;
 }
 
 .skill-card {
@@ -503,6 +504,10 @@ p {
 /* --- Skill Categories --- */
 .skill-category {
     margin-bottom: 4.5rem;
+}
+
+.skill-category:first-of-type {
+    margin-top: 6rem;
 }
 
 .skill-category:last-child {
