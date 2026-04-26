@@ -7,4 +7,6 @@ Route::get('/', function () {
     return view('portfolio');
 });
 
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+Route::post('/contact', [ContactController::class, 'send'])
+    ->name('contact.send')
+    ->middleware('throttle:3,1');

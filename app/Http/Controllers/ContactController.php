@@ -10,20 +10,28 @@ class ContactController extends Controller
 {
     public function send(Request $request)
     {
+        if (!empty($request->website_url)) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => 'Thank you! Your message has been sent successfully.']);
+            }
+            return back()->with('success', 'Thank you! Your message has been sent successfully.');
+        }
+
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message' => 'required|string|min:10',
+            'name' => 'required|string|max:100|regex:/^[\pL\s\-]+$/u', 
+            'email' => 'required|email:rfc,dns|max:255', 
+            'message' => 'required|string|min:10|max:3000', 
         ]);
+
+        $validatedData['name'] = strip_tags($validatedData['name']);
+        $validatedData['message'] = strip_tags($validatedData['message']);
 
         Mail::to('aeron.salinas@gmail.com')->send(new ContactFormMail($validatedData));
 
-        // Tell Laravel to return JSON if it detects an AJAX request
         if ($request->wantsJson()) {
             return response()->json(['success' => 'Thank you! Your message has been sent successfully. I will get back to you as soon as possible.']);
         }
 
-        // Fallback for standard submission
         return back()->with('success', 'Thank you! Your message has been sent successfully. I will get back to you as soon as possible.');
     }
 }

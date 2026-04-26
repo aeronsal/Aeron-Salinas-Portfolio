@@ -808,6 +808,254 @@ footer {
     stroke-linejoin: round;
 }
 
+/* --- Professional Resume Layout --- */
+.resume-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 800px;
+}
+
+/* Left Sidebar (Darker Glass) */
+.resume-sidebar {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--glass-border);
+}
+
+.resume-name {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.resume-title {
+    color: var(--laravel-red);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.resume-sidebar-section {
+    margin-bottom: 2.5rem;
+}
+
+.resume-sidebar-section h4 {
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resume-contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.resume-contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.resume-contact-list i {
+    color: var(--laravel-red);
+    width: 15px;
+}
+
+.resume-skill-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--white);
+    margin: 0 0.4rem 0.5rem 0;
+}
+
+/* Right Main Content Area */
+.resume-main {
+    padding: 3.5rem 4rem;
+}
+
+.resume-main-section {
+    margin-bottom: 3rem;
+}
+
+.resume-main-section h3 {
+    color: var(--white);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.resume-main-section h3 i {
+    color: var(--laravel-red);
+}
+
+.resume-summary {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+/* Timeline Items (Education & Certs) */
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+    border-left: 2px solid rgba(255, 45, 32, 0.3);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--laravel-red);
+    box-shadow: 0 0 10px rgba(255, 45, 32, 0.5);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: var(--laravel-red);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.timeline-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Grid Breakdown */
+@media (max-width: 992px) {
+    .resume-grid {
+        grid-template-columns: 1fr;
+    }
+    .resume-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 3rem 2rem;
+    }
+    .resume-main {
+        padding: 3rem 2rem;
+    }
+    .timeline-header {
+        flex-direction: column;
+    }
+    .timeline-date {
+        margin-top: 0.2rem;
+    }
+}
+
+/* --- SPA View Transitions --- */
+.view-wrapper {
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    will-change: opacity, transform;
+}
+
+/* Fades the view out and slides it up slightly */
+.view-wrapper.fade-out {
+    opacity: 0 !important;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+/* Fades the view in and snaps it to original position */
+.view-wrapper.fade-in {
+    opacity: 1 !important;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* --- Resume Profile Image --- */
+.resume-profile-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.resume-profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 25px rgba(255, 45, 32, 0.15); /* Subtle Laravel Red glow */
+    transition: transform 0.4s ease;
+}
+
+.resume-profile-img:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Credential Buttons (Credly / LinkedIn) --- */
+.btn-credential {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.btn-credential i {
+    font-size: 0.85rem;
+}
+
+/* Hover Effects with Brand Colors */
+.btn-credential:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-credential.credly:hover {
+    border-color: #FF6B00;
+    color: #FF6B00;
+    box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
+}
+
+.btn-credential.linkedin:hover {
+    border-color: #0A66C2;
+    color: #0A66C2;
+    box-shadow: 0 4px 10px rgba(10, 102, 194, 0.2);
+}
+
 /* Disable on Mobile / Touch Devices */
 @media (hover: none), (pointer: coarse), (max-width: 768px) {
     body, a, button { cursor: auto !important; }
@@ -931,5 +1179,13 @@ footer {
 
     .project-card {
         max-width: 100%; 
+    }
+
+    .resume-wrapper { 
+        padding: 1.5rem; 
+    
+    }
+    .resume-item-header { 
+        flex-direction: column; 
     }
 }

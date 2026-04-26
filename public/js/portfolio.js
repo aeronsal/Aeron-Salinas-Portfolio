@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSpotlight();
     initContactForm();
     init3DCursorAndTilt();
+    initSpaTransitions();
 });
 
 // ==========================================
@@ -161,6 +162,9 @@ function initContactForm() {
                             input.parentElement.appendChild(errorSpan);
                         }
                     }
+                } else if (response.status === 429) {
+                    // Handle Laravel Rate Limiting (Throttling)
+                    formMessage.innerHTML = `<div style="background: rgba(255, 165, 0, 0.2); border: 1px solid #FFA500; color: #FFA500; padding: 1rem; border-radius: 8px; text-align: center; margin-bottom: 1.5rem;">You are sending messages too quickly. Please wait a minute before trying again.</div>`;
                 } else {
                     throw new Error('Server error');
                 }
@@ -329,4 +333,89 @@ function init3DCursorAndTilt() {
 
     circlePoints(m.x, m.y, CIRCLE_R, cur);
     requestAnimationFrame(tick);
+}
+
+// ==========================================
+// 6. SPA View Transitions (Portfolio <-> Resume)
+// ==========================================
+function initSpaTransitions() {
+    const viewResumeBtn = document.getElementById('view-resume-btn');
+    const returnBtn = document.getElementById('return-portfolio-btn');
+    
+    const mainContent = document.getElementById('main-content-wrapper');
+    const resumeContent = document.getElementById('resume-content-wrapper');
+    
+    const mainNav = document.getElementById('main-nav-links');
+    const resumeNav = document.getElementById('resume-nav-links');
+    const hamburger = document.getElementById('nav-hamburger');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const hamburgerIcon = document.querySelector('.hamburger i');
+
+    if (!viewResumeBtn || !returnBtn || !mainContent || !resumeContent) return;
+
+    const animateSwap = (hideWrapper, showWrapper, hideNav, showNav, isEnteringResume) => {
+        // 1. Trigger Fade Out
+        hideWrapper.classList.remove('fade-in');
+        hideWrapper.classList.add('fade-out');
+        hideNav.style.opacity = '0';
+        hideNav.style.pointerEvents = 'none';
+        
+        if (isEnteringResume) hamburger.style.display = 'none';
+
+        // 2. Wait for the CSS transition (400ms)
+        setTimeout(() => {
+            // Hide old elements
+            hideWrapper.style.display = 'none';
+            hideNav.style.display = 'none';
+            
+            // Show new elements 
+            showWrapper.style.display = 'block';
+            showNav.style.display = 'flex';
+            
+            //Handle mobile menu state correctly
+            if (!isEnteringResume && window.innerWidth <= 768) {
+                // Restore the hamburger icon
+                hamburger.style.display = 'block';
+                
+                // Ensure the mobile menu and overlay are fully closed/reset
+                showNav.classList.remove('nav-active');
+                if (menuOverlay) menuOverlay.classList.remove('active');
+                if (hamburgerIcon) hamburgerIcon.className = 'fas fa-bars';
+                document.body.style.overflow = 'auto';
+                
+                // Remove the forced JS inline styles so your mobile CSS can hide the dropdown again!
+                showNav.style.opacity = '';
+                showNav.style.pointerEvents = '';
+                showNav.style.transform = ''; 
+            } else {
+                // On Desktop (or when showing the Return button), force it to be visible
+                showNav.style.opacity = '1';
+                showNav.style.pointerEvents = 'auto';
+            }
+
+            // Force browser reflow
+            void showWrapper.offsetWidth;
+            
+            // 3. Trigger Fade In
+            showWrapper.classList.remove('fade-out');
+            showWrapper.classList.add('fade-in');
+
+            // 4. Smoothly scroll to top instantly
+            window.scrollTo(0, 0);
+            
+            // 5. Refresh animations
+            setTimeout(() => AOS.refreshHard(), 100);
+
+        }, 400); 
+    };
+
+    viewResumeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        animateSwap(mainContent, resumeContent, mainNav, resumeNav, true);
+    });
+
+    returnBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        animateSwap(resumeContent, mainContent, resumeNav, mainNav, false);
+    });
 }
